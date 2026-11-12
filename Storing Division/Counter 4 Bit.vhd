@@ -1,7 +1,7 @@
 --COUNTER 4 BIT
 
 --Deskripsi:
---Blok ini berfungsi untuk penghitungan secara naik (incremental), berukuran 4 bit.
+--Blok ini berfungsi untuk menghitung secara incremental, berukuran 4 bit.
 
 
 -- Library
