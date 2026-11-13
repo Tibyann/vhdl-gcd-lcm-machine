@@ -49,7 +49,7 @@ begin
 				D => B, en => en_B, clk => clk, Q => Q_B
 	);	
 			
-	sub_AB : entity work.substractor_17_bit
+	sub_AB : entity work.subtractor_17_bit
 	port map (
 				A => Q_A(31 downto 15), B => B_pad, B_out => B_out, R => R
 	);
