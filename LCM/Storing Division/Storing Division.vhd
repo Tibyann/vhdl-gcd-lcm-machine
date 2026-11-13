@@ -9,16 +9,17 @@ library IEEE;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+
 --Define Entity
 entity storing_division is
-    --Define Port
     port (
 			 A,B 			: in std_logic_vector(15 downto 0);
 			 start, clk : in std_logic; 
 			 D				: out std_logic_vector(15 downto 0);
           busy 		: out std_logic
-			 );
+			);
 end storing_division;
+
 
 --Define Architecture
 architecture rtl of storing_division is
@@ -58,7 +59,7 @@ begin
 				en	=> en_count, rst => rst_count, clk => clk, count => count
 	);
 	
-	shift_reg_D : entity work.shift_register_16_bit
+	shift_reg_D : entity work.srl_Lshift_register_16_bit
 	port map (
 				D_srl => D_srl, en	=> en_D, clk => clk, Q => D
 	);
