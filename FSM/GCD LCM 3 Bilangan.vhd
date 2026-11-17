@@ -57,7 +57,7 @@ begin
 	C_pad_32  <= "0000000000000000" & Q_C;
 	G1_pad_32 <= "0000000000000000" & Q_G1;
 	
-	-- Mux untuk memilih input 32-bit ke blok GCD (Q_LCM1 masuk utuh 32-bit)
+	-- Mux untuk memilih input 32-bit ke blok GCD 
 	mux_gcd_A: entity work.mux_4_to_1_16_bit
 	port map (
 				A => A_pad_32, B => G1_pad_32, C => Q_LCM1, D => A_pad_32,
@@ -88,7 +88,7 @@ begin
 	reg_G_lcm: entity work.register_16_bit
 	port map (D => gcd_res(15 downto 0), en => en_G_lcm, clk => clk, Q => Q_G_lcm);
 	
-	-- Mux untuk memilih input ke blok Storing Division (tetap murni 16-bit)
+	-- Mux untuk memilih input ke blok Storing Division
 	mux_div_A: entity work.mux_2_to_1_16_bit
 	port map (A => Q_A, B => Q_C, sel => sel_div, data => div_in_A);
 	
