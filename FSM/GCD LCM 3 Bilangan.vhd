@@ -33,10 +33,13 @@ architecture rtl of gcd_lcm_3_bilangan is
 	
 	signal Q_A, Q_B, Q_C : std_logic_vector(15 downto 0);
 	signal Q_G1, Q_GCD_tot, Q_G_lcm, Q_Q1, Q_Q2 : std_logic_vector(15 downto 0);
-	signal gcd_in_A, gcd_in_B, gcd_res : std_logic_vector(15 downto 0);
+	
+	signal gcd_in_A, gcd_in_B, gcd_res : std_logic_vector(31 downto 0);
+	signal A_pad_32, B_pad_32, C_pad_32, G1_pad_32 : std_logic_vector(31 downto 0);
+	
 	signal div_in_A, div_in_B, div_res : std_logic_vector(15 downto 0);
 	signal mult_in_A : std_logic_vector(15 downto 0);
-	signal mult_in_B, B_pad_32, mult_res, Q_LCM1, Q_LCM_tot : std_logic_vector(31 downto 0);
+	signal mult_in_B, mult_res, Q_LCM1, Q_LCM_tot : std_logic_vector(31 downto 0);
 begin
 	-- Register penyimpan 3 input awal
 	reg_in_A: entity work.register_16_bit
@@ -48,20 +51,26 @@ begin
 	reg_in_C: entity work.register_16_bit
 	port map (D => C, en => en_in, clk => clk, Q => Q_C);
 	
-	-- Mux untuk memilih input ke blok GCD
+	-- tnambahin 0 dibelakang 16 bit biar jadi 32 bit
+	A_pad_32  <= "0000000000000000" & Q_A;
+	B_pad_32  <= "0000000000000000" & Q_B;
+	C_pad_32  <= "0000000000000000" & Q_C;
+	G1_pad_32 <= "0000000000000000" & Q_G1;
+	
+	-- Mux untuk memilih input 32-bit ke blok GCD (Q_LCM1 masuk utuh 32-bit)
 	mux_gcd_A: entity work.mux_4_to_1_16_bit
 	port map (
-				A => Q_A, B => Q_G1, C => Q_LCM1(15 downto 0), D => Q_A,
+				A => A_pad_32, B => G1_pad_32, C => Q_LCM1, D => A_pad_32,
 				sel => sel_gcd, data => gcd_in_A
 	);
 	
 	mux_gcd_B: entity work.mux_4_to_1_16_bit
 	port map (
-				A => Q_B, B => Q_C, C => Q_C, D => Q_B,
+				A => B_pad_32, B => C_pad_32, C => C_pad_32, D => B_pad_32,
 				sel => sel_gcd, data => gcd_in_B
 	);
 	
-	-- Blok utama Binary GCD 16-bit
+	-- Blok utama Binary GCD (32-bit)
 	unit_gcd: entity work.gcd
 	port map (
 				A => gcd_in_A, B => gcd_in_B,
@@ -69,17 +78,17 @@ begin
 				D => gcd_res, busy_GCD => busy_GCD
 	);
 	
-	-- Register penyimpan hasil GCD tiap tahap
+	-- Register penyimpan hasil GCD tiap tahap 
 	reg_G1: entity work.register_16_bit
-	port map (D => gcd_res, en => en_G1, clk => clk, Q => Q_G1);
+	port map (D => gcd_res(15 downto 0), en => en_G1, clk => clk, Q => Q_G1);
 	
 	reg_GCD_tot: entity work.register_16_bit
-	port map (D => gcd_res, en => en_GCD_tot, clk => clk, Q => Q_GCD_tot);
+	port map (D => gcd_res(15 downto 0), en => en_GCD_tot, clk => clk, Q => Q_GCD_tot);
 	
 	reg_G_lcm: entity work.register_16_bit
-	port map (D => gcd_res, en => en_G_lcm, clk => clk, Q => Q_G_lcm);
+	port map (D => gcd_res(15 downto 0), en => en_G_lcm, clk => clk, Q => Q_G_lcm);
 	
-	-- Mux untuk memilih input ke blok Storing Division
+	-- Mux untuk memilih input ke blok Storing Division (tetap murni 16-bit)
 	mux_div_A: entity work.mux_2_to_1_16_bit
 	port map (A => Q_A, B => Q_C, sel => sel_div, data => div_in_A);
 	
@@ -101,9 +110,7 @@ begin
 	reg_Q2: entity work.register_16_bit
 	port map (D => div_res, en => en_Q2, clk => clk, Q => Q_Q2);
 	
-	-- Mux dan blok Multiplier untuk menghitung LCM
-	B_pad_32 <= "0000000000000000" & Q_B;
-	
+	-- Mux dan blok Multiplier penghitung LCM
 	mux_mult_A: entity work.mux_2_to_1_16_bit
 	port map (A => Q_Q1, B => Q_Q2, sel => sel_mult, data => mult_in_A);
 	
