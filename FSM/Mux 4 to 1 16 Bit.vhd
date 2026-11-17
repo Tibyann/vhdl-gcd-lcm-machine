@@ -13,12 +13,12 @@ use ieee.numeric_std.all;
 -- Define Entity
 entity mux_4_to_1_16_bit is
 	port	(
-				A		:	in		std_logic_vector (15 downto 0);	
-				B		:	in		std_logic_vector (15 downto 0);	
-				C		:	in		std_logic_vector (15 downto 0);	
-				D		:	in		std_logic_vector (15 downto 0);	
+				A		:	in		std_logic_vector (31 downto 0);	
+				B		:	in		std_logic_vector (31 downto 0);	
+				C		:	in		std_logic_vector (31 downto 0);	
+				D		:	in		std_logic_vector (31 downto 0);	
 				sel	:	in		std_logic_vector (1 downto 0);								
-				data	:	out	std_logic_vector (15 downto 0)
+				data	:	out	std_logic_vector (31 downto 0)
 			);
 end mux_4_to_1_16_bit;
 
