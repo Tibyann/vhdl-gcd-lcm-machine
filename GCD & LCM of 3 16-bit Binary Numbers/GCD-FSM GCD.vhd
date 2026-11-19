@@ -38,6 +38,7 @@ begin
 				load_A <= '1';
 				load_B <= '1';
 				busy_GCD <= '0';
+				way <= '1';
 				rst_count <= '1';
 				load_D <= '0';
 				
@@ -46,14 +47,12 @@ begin
 					en_B <= '1';
 					en_D <= '0';
 					en_count <= '0';
-					way <= '1';
 					next_state <= SUB_SHIFT;
 				else
 					en_A <= '0';
 					en_B <= '0';
 					en_D <= '0';
 					en_count <= '0';
-					way <= '1';
 					next_state <= IDLE;
 				end if;			
 			
@@ -61,6 +60,7 @@ begin
 				load_A <= '0';
 				load_B <= '0';
 				busy_GCD <= '1';
+				way <= '1';
 				rst_count <= '0';
 				load_D <= '1';
 				
@@ -69,14 +69,12 @@ begin
 					en_B <= '0';
 					en_D <= '1';
 					en_count <= '0';
-					way <= '0';
 					next_state <= COUNT;
 				else
 					en_A <= '1';
 					en_B <= '1';
 					en_D <= '0';
 					en_count <= '1';
-					way <= '1';
 					next_state <= SUB_SHIFT;
 				end if;
 				
@@ -84,6 +82,7 @@ begin
 				load_A <= '0';
 				load_B <= '0';
 				busy_GCD <= '1';
+				way <= '0';
 				rst_count <= '0';
 				load_D <= '0';
 				
@@ -92,14 +91,12 @@ begin
 					en_B <= '0';
 					en_D <= '0';
 					en_count <= '0';
-					way <= '0';
 					next_state <= IDLE;
 				else
 					en_A <= '0';
 					en_B <= '0';
 					en_D <= '1';
 					en_count <= '1';
-					way <= '0';
 					next_state <= COUNT;
 				end if;
 		end case;
