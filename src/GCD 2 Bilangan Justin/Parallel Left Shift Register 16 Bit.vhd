@@ -1,10 +1,8 @@
---PARALLEL LEFT SHIFT REGISTER 16 BIT
+--PARALLEL LEFT SHIFT REGISTER 32 BIT
 
 --Deskripsi:
---Blok ini berfungsi untuk me-load data secara paralel, menggesernya ke kiri, dan menyimpannya dalam ukuran 16 bit.
-
-
---BARREL LEFT SHIFT REGISTER 32 BIT (1 SIKLUS)
+--Blok ini berfungsi untuk me-load data secara paralel, menggesernya ke kiri, dan menyimpannya dalam ukuran 32 bit.
+--Barrel Left Shift Register 32 bit 
 
 library ieee;
 use ieee.std_logic_1164.all;
