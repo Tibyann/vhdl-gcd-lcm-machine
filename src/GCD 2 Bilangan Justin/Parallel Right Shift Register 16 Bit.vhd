@@ -1,7 +1,6 @@
 --PARALLEL RIGHT SHIFT REGISTER 16 BIT
-
 --Deskripsi:
---Blok ini berfungsi untuk me-load data secara paralel, menggesernya ke kanan, dan menyimpannya dalam ukuran 16 bit.
+--Blok ini berfungsi untuk me-load data secara paralel, menggesernya ke kanan, dan menyimpannya dalam ukuran 32 bit.
 
 
 library ieee;
