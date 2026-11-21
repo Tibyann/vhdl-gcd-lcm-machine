@@ -4,7 +4,7 @@
 --Blok ini berfungsi sebagai unit control GCD.
 
 
---FSM GCD (2 STATE - FAST BARREL SHIFT)
+--FSM GCD (2 State - Fast Barrel Shift)
 
 library IEEE;
 use ieee.std_logic_1164.all;
